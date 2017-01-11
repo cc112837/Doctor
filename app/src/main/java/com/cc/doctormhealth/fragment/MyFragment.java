@@ -1,5 +1,6 @@
 package com.cc.doctormhealth.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,10 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.GetCallback;
 import com.cc.doctormhealth.R;
+import com.cc.doctormhealth.activity.AboutActivity;
+import com.cc.doctormhealth.activity.MyMoneyActivity;
+import com.cc.doctormhealth.activity.PrideActivity;
+import com.cc.doctormhealth.activity.SettingActivity;
 import com.cc.doctormhealth.model.LeanchatUser;
 import com.squareup.picasso.Picasso;
 
@@ -70,30 +75,6 @@ public class MyFragment extends BaseFragment {
             }
         });
     }
-
-//
-//    @OnClick(R.id.profile_notifysetting_view)
-//    public void onNotifySettingClick() {
-//        Intent intent = new Intent(ctx, ProfileNotifySettingActivity.class);
-//        ctx.startActivity(intent);
-//    }
-//
-//
-//    @OnClick(R.id.profile_logout_btn)
-//    public void onLogoutClick() {
-//        LCChatKit.getInstance().close(new AVIMClientCallback() {
-//            @Override
-//            public void done(AVIMClient avimClient, AVIMException e) {
-//            }
-//        });
-//        PushManager.getInstance().unsubscribeCurrentUserChannel();
-//        LeanchatUser.logOut();
-//        getActivity().finish();
-//        Intent intent = new Intent(ctx, EntryLoginActivity.class);
-//        ctx.startActivity(intent);
-//    }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -102,14 +83,23 @@ public class MyFragment extends BaseFragment {
 
     @OnClick({R.id.money, R.id.pride, R.id.setting, R.id.about, R.id.share})
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.money:
+                intent=new Intent(getActivity(), MyMoneyActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.pride:
+                intent=new Intent(getActivity(), PrideActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.setting:
+                intent=new Intent(getActivity(), SettingActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.about:
+                intent=new Intent(getActivity(), AboutActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.share:
                 break;
