@@ -5,7 +5,8 @@ package com.cc.doctormhealth.util;
  * 用来存放各种 static final 值
  */
 public class Constants {
-
+  public final static String SERVER_HOST = "117.34.105.29";
+  public final static String SERVER_URL = "http://"+SERVER_HOST+":8818/mhealth/servlet/";
   public static final String OBJECT_ID = "objectId";
   public static final int PAGE_SIZE = 10;
   public static final String CREATED_AT = "createdAt";

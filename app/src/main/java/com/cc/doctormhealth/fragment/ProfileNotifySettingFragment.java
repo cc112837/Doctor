@@ -10,7 +10,7 @@ import com.cc.doctormhealth.service.PreferenceMap;
 
 
 /**
- * Created by lzw on 14-9-24.
+ * 提醒设置页面
  */
 public class ProfileNotifySettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
   public static final String NOTIFY_WHEN_NEWS = "notifyWhenNews";
