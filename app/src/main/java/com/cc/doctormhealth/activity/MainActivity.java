@@ -9,8 +9,8 @@ import android.widget.Button;
 
 import com.cc.doctormhealth.R;
 import com.cc.doctormhealth.fragment.MessageAskFragment;
-import com.cc.doctormhealth.fragment.NewsFragment;
 import com.cc.doctormhealth.fragment.MyFragment;
+import com.cc.doctormhealth.fragment.NewsFragment;
 import com.cc.doctormhealth.fragment.OrderFragment;
 import com.cc.doctormhealth.friends.ContactFragment;
 import com.cc.doctormhealth.model.LeanchatUser;
@@ -66,7 +66,7 @@ public class MainActivity extends AVBaseActivity {
 
 
     private void init() {
-        tabs = new Button[]{btn_yuyue,btn_message,btn_news, btn_contact,  btn_my};
+        tabs = new Button[]{btn_yuyue,btn_message,btn_news, btn_contact,btn_my};
     }
 
     private void findView() {
@@ -130,12 +130,14 @@ public class MainActivity extends AVBaseActivity {
             }
         }
         transaction.commit();
+        tabs[pos].setTextColor(getResources().getColor(R.color.color_bottom_text_press));
         setTopDrawable(tabs[pos], tabsActiveBackIds[pos]);
     }
 
     private void setNormalBackgrounds() {
         for (int i = 0; i < tabs.length; i++) {
             Button v = tabs[i];
+            v.setTextColor(getResources().getColor(R.color.color_bottom_text_normal));
             setTopDrawable(v, tabsNormalBackIds[i]);
         }
     }

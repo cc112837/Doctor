@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -17,6 +18,8 @@ import com.cc.doctormhealth.viewholder.GroupItemHolder;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.leancloud.chatkit.adapter.LCIMCommonListAdapter;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 
@@ -25,45 +28,53 @@ import cn.leancloud.chatkit.utils.LCIMConstants;
  */
 public class ConversationGroupListActivity extends AVBaseActivity {
 
-  @Bind(R.id.activity_group_list_srl_view)
-  protected RecyclerView recyclerView;
+    @Bind(R.id.activity_group_list_srl_view)
+    protected RecyclerView recyclerView;
 
-  LinearLayoutManager layoutManager;
-  private LCIMCommonListAdapter<AVIMConversation> itemAdapter;
+    LinearLayoutManager layoutManager;
+    @Bind(R.id.leftBtn)
+    ImageView leftBtn;
+    private LCIMCommonListAdapter<AVIMConversation> itemAdapter;
 
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.group_list_activity);
-    initView();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.group_list_activity);
+        ButterKnife.bind(this);
+        initView();
 
-    setTitle(App.ctx.getString(R.string.conversation_group));
-    refreshGroupList();
-  }
+        setTitle(App.ctx.getString(R.string.conversation_group));
+        refreshGroupList();
+    }
 
-  private void initView() {
-    layoutManager = new LinearLayoutManager(this);
-    recyclerView.setLayoutManager(layoutManager);
-    itemAdapter = new LCIMCommonListAdapter<>(GroupItemHolder.class);
-    recyclerView.setAdapter(itemAdapter);
-  }
+    private void initView() {
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        itemAdapter = new LCIMCommonListAdapter<>(GroupItemHolder.class);
+        recyclerView.setAdapter(itemAdapter);
+    }
 
-  private void refreshGroupList() {
-    ConversationUtils.findGroupConversationsIncludeMe(new AVIMConversationQueryCallback() {
-      @Override
-      public void done(List<AVIMConversation> conversations, AVIMException e) {
-        if (filterException(e)) {
-          itemAdapter.setDataList(conversations);
-          itemAdapter.notifyDataSetChanged();
-        }
-      }
-    });
-  }
+    private void refreshGroupList() {
+        ConversationUtils.findGroupConversationsIncludeMe(new AVIMConversationQueryCallback() {
+            @Override
+            public void done(List<AVIMConversation> conversations, AVIMException e) {
+                if (filterException(e)) {
+                    itemAdapter.setDataList(conversations);
+                    itemAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
 
-  public void onEvent(GroupItemClickEvent event) {
-    Intent intent = new Intent(ConversationGroupListActivity.this, ChatRoomActivity.class);
-    intent.putExtra(LCIMConstants.CONVERSATION_ID, event.conversationId);
-    startActivity(intent);
-  }
+    public void onEvent(GroupItemClickEvent event) {
+        Intent intent = new Intent(ConversationGroupListActivity.this, ChatRoomActivity.class);
+        intent.putExtra(LCIMConstants.CONVERSATION_ID, event.conversationId);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.leftBtn)
+    public void onClick() {
+        finish();
+    }
 }

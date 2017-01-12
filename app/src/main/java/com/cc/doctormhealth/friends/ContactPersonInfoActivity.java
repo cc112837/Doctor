@@ -26,8 +26,8 @@ import cn.leancloud.chatkit.utils.LCIMConstants;
  * 用户详情页，从对话详情页面和发现页面跳转过来
  */
 public class ContactPersonInfoActivity extends AVBaseActivity implements OnClickListener {
-  TextView usernameView, genderView;
-  ImageView avatarView, avatarArrowView;
+  TextView usernameView, genderView,title;
+  ImageView avatarView, avatarArrowView,leftBtn;
   LinearLayout allLayout;
   Button chatBtn, addFriendBtn;
   RelativeLayout avatarLayout, genderLayout;
@@ -58,7 +58,8 @@ public class ContactPersonInfoActivity extends AVBaseActivity implements OnClick
     usernameView = (TextView) findViewById(R.id.username_view);
     avatarLayout = (RelativeLayout) findViewById(R.id.head_layout);
     genderLayout = (RelativeLayout) findViewById(R.id.sex_layout);
-
+    leftBtn = (ImageView) findViewById(R.id.leftBtn);
+    title = (TextView) findViewById(R.id.title);
     genderView = (TextView) findViewById(R.id.sexView);
     chatBtn = (Button) findViewById(R.id.chatBtn);
     addFriendBtn = (Button) findViewById(R.id.addFriendBtn);
@@ -68,16 +69,19 @@ public class ContactPersonInfoActivity extends AVBaseActivity implements OnClick
     LeanchatUser curUser = LeanchatUser.getCurrentUser();
     if (curUser.equals(user)) {
       setTitle(R.string.contact_personalInfo);
+      title.setText(R.string.contact_personalInfo);
       avatarLayout.setOnClickListener(this);
       genderLayout.setOnClickListener(this);
       avatarArrowView.setVisibility(View.VISIBLE);
       chatBtn.setVisibility(View.GONE);
       addFriendBtn.setVisibility(View.GONE);
     } else {
+      title.setText(R.string.contact_detailInfo);
       setTitle(R.string.contact_detailInfo);
       avatarArrowView.setVisibility(View.INVISIBLE);
       List<String> cacheFriends = FriendsManager.getFriendIds();
       boolean isFriend = cacheFriends.contains(user.getObjectId());
+      leftBtn.setOnClickListener(this);
       if (isFriend) {
         chatBtn.setVisibility(View.VISIBLE);
         chatBtn.setOnClickListener(this);
@@ -103,6 +107,9 @@ public class ContactPersonInfoActivity extends AVBaseActivity implements OnClick
         Intent intent = new Intent(ContactPersonInfoActivity.this, ChatRoomActivity.class);
         intent.putExtra(LCIMConstants.PEER_ID, userId);
         startActivity(intent);
+        finish();
+        break;
+      case  R.id.leftBtn:
         finish();
         break;
       case R.id.addFriendBtn:// 添加好友
